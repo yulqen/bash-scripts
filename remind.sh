@@ -85,10 +85,9 @@ COMMAND="REM $day ${MONTHS[$month]} $year AT $TIME +15 *5 MSG $DESCRIPTION %1"
 
 # main 
 # first test if pid
-pid_cmd="pgrep $remind"
-[[ -z $(ssh $TW_HOOK_REMIND_REMOTE_HOST "pgrep $remind > /dev/null 2>&1") ]] && echo "Failed to get remind PID" && exit 1
+[[ -z $(ssh $TW_HOOK_REMIND_REMOTE_HOST "$pid_cmd" > /dev/null 2>&1") ]] && echo "Failed to get remind PID" && exit 1
 
-echo $pid
+echo "remind PID is $pid"
 
 ssh $TW_HOOK_REMIND_REMOTE_HOST "
 echo "$COMMAND" >> ~/.reminders/${TARGETFILE}.rem
