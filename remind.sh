@@ -21,7 +21,6 @@ brightyellow='\e[93m'
 
 declare -A MONTHS=( [01]=January [02]=February [03]=March [04]=April [05]=May [06]=June [07]=July [08]=August [09]=September [10]=October [11]=November [12]=December )
 
-echo "$# parameters given"
 
 if [[ $# != 2 ]] ; then
     echo "You need to give me three parameters. Expect DATETIME (YYYYMMDDTHHMM) DESCRIPTION."
@@ -51,14 +50,15 @@ if (( $month > 12 )) ; then
     exit 1
 fi
 
-echo -e "Got day $green$day$eescape."
-echo "Got month ${MONTHS[$month]}."
-echo "Got year $year."
-echo "Got hour $hour."
-echo "Got minute $min."
+# debug messages
+# echo "$# parameters given"
+# echo -e "Got day $green$day$eescape."
+# echo "Got month ${MONTHS[$month]}."
+# echo "Got year $year."
+# echo "Got hour $hour."
+# echo "Got minute $min."
 
 DESC_LENGTH=$(expr length "$DESCRIPTION")
-echo $DESC_LENGTH
 
 if (($DESC_LENGTH > 50)) ; then
     echo -e "${red}Sorry, that is too long a description... Less than 50 please.$eescape"
@@ -69,13 +69,15 @@ if [[ -z "${TW_HOOK_REMIND_REMOTE_HOST}" ]] ; then
     echo -e "${red}TW_HOOK_REMIND_REMOTE_HOST environment variable is not set. Set it to hostname of target machine.$eescape"
     exit 1;
 else
-    echo -e "${brightyellow}TW_HOOK_REMIND_REMOTE_HOST${eescape} set"
+    echo -e "${brightyellow}TW_HOOK_REMIND_REMOTE_HOST set to $TW_HOOK_REMIND_REMOTE_HOST${eescape}"
 fi
 
-COMMAND="REM $day ${MONTHS[$month]} $year AT $TIME +15 *5 MSG $DESCRIPTION %b"
+COMMAND="REM $day ${MONTHS[$month]} $year AT $TIME +15 *5 MSG $DESCRIPTION %1"
 
 ssh $TW_HOOK_REMIND_REMOTE_HOST "
 echo "$COMMAND" >> ~/.reminders/work.rem
+echo ''
+echo 'work.rem remind file is now:'
 cat ~/.reminders/work.rem
 "
 exit 0
