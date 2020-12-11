@@ -32,7 +32,6 @@ else
     DATETIME="$2"
     DESCRIPTION="$3"
 fi
-echo "$TARGETFILE"
 # Guard against bad file names
 if [[ "$TARGETFILE" != "home" && "$TARGETFILE" != "work" ]] ; then 
     echo -e "${red}Please provide either 'work' or 'home' as the first argument.$eescape"
@@ -84,8 +83,13 @@ fi
 COMMAND="REM $day ${MONTHS[$month]} $year AT $TIME +15 *5 MSG $DESCRIPTION %1"
 
 # main 
+# COMMENT THIS OUT WHEN TESTING ON LOCAL VM
+# --------------
+pid_cmd="pgrep remind"
+remind_command_msg="${brightyellow}Run '$remind_full' in a tmux window on $TW_HOOK_REMIND_REMOTE_HOST.$eescape"
 # first test if pid - if not exit (SCRIPT OBVIOUSLY WILL NOT PROCEED FOR TEST SERVER)
-[[ -z $(ssh $TW_HOOK_REMIND_REMOTE_HOST "$pid_cmd > /dev/null 2>&1") ]] && echo "Failed to get remind PID" && exit 1
+[[ -z $(ssh $TW_HOOK_REMIND_REMOTE_HOST "$pid_cmd") ]] && echo -e "${red}Failed to get remind PID. remind is not running.$eescape" && echo -e $remind_command_msg && exit 1
+# -------------
 
 ssh $TW_HOOK_REMIND_REMOTE_HOST "
 echo "$COMMAND" >> ~/.reminders/${TARGETFILE}.rem
