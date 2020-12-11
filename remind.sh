@@ -21,13 +21,22 @@ brightyellow='\e[93m'
 
 declare -A MONTHS=( [01]=January [02]=February [03]=March [04]=April [05]=May [06]=June [07]=July [08]=August [09]=September [10]=October [11]=November [12]=December )
 
+remind_full="remind -z -k~/.virtualenvs/telegram-send/bin/telegram-send %s /home/lemon/.reminders"
+remind_cmd="remind"
 
-if [[ $# != 2 ]] ; then
-    echo "You need to give me three parameters. Expect DATETIME (YYYYMMDDTHHMM) DESCRIPTION."
+if [[ $# != 3 ]] ; then
+    echo "You need to give me four parameters. Expect FILE DATETIME (YYYYMMDDTHHMM) DESCRIPTION."
     exit 1
 else
-    DATETIME="$1"
-    DESCRIPTION="$2"
+    TARGETFILE="$1"
+    DATETIME="$2"
+    DESCRIPTION="$3"
+fi
+echo "$TARGETFILE"
+# Guard against bad file names
+if [[ "$TARGETFILE" != "home" && "$TARGETFILE" != "work" ]] ; then 
+    echo -e "${red}Please provide either 'work' or 'home' as the first argument.$eescape"
+    exit 1
 fi
 
 dateRegex='^([[:digit:]]{4,4})([[:digit:]]{2,2})([[:digit:]]{2,2})T([[:digit:]]{2,2})([[:digit:]]{2,2})$'
@@ -74,10 +83,17 @@ fi
 
 COMMAND="REM $day ${MONTHS[$month]} $year AT $TIME +15 *5 MSG $DESCRIPTION %1"
 
+# main 
+# first test if pid
+pid_cmd="pgrep $remind"
+[[ -z $(ssh $TW_HOOK_REMIND_REMOTE_HOST "pgrep $remind > /dev/null 2>&1") ]] && echo "Failed to get remind PID" && exit 1
+
+echo $pid
+
 ssh $TW_HOOK_REMIND_REMOTE_HOST "
-echo "$COMMAND" >> ~/.reminders/work.rem
+echo "$COMMAND" >> ~/.reminders/${TARGETFILE}.rem
 echo ''
-echo 'work.rem remind file is now:'
-cat ~/.reminders/work.rem
+echo '${TARGETFILE}.rem remind file is now:'
+cat ~/.reminders/${TARGETFILE}.rem
 "
 exit 0
