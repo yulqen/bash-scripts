@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# a script for FZFing through my Notes folder for quick reading.
+# Uses bat if installed, otherwise will use less.
+
+NOTES=/home/$USER/Notes
+FZF_BIN=/home/$USER/.fzf/bin/fzf
+BAT=/usr/bin/bat
+LESS=/usr/bin/less
+CMD=$LESS
+
+# if [[ -z $1 ]]; then
+#     echo "You must provide a file name as the argument to this command."
+#     exit 1
+# else
+#     TARGET=$1
+# fi
+
+if ! [[ -x $FZF_BIN ]]; then
+    echo "You need to have FZF installed for this to work."
+    exit 1
+fi
+
+if [[ -x $BAT ]]; then
+    CMD=$BAT
+fi
+$CMD "$NOTES/$(ls $NOTES|$FZF_BIN)"
+
+
