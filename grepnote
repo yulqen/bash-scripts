@@ -1,0 +1,25 @@
+#!/bin/bash
+
+NOTES=/home/$USER/Notes
+RG_BIN=/usr/bin/rg
+GREP=/usr/bin/grep
+CMD="$RG_BIN --heading -i"
+
+if [[ -z $1 ]]; then
+    echo "You must provide a file name as the argument to this command."
+    exit 1
+else
+    TARGET=$1
+fi
+
+# test for rg
+if ! [[ -x $RG_BIN ]]; then
+    CMD="$($GREP -n -H -r)"
+fi
+
+# rg --heading -i "joanna" ~/Notes/journal/
+echo $TARGET
+echo $NOTES
+$CMD $TARGET $NOTES
+
+
