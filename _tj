@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Our target file
+TODAY_JOURNAL=~/Notes/journal/$(date +\%Y-\%m-\%d).md
+
+# Test whether it already exisits or not
+if [[ -a $TODAY_JOURNAL ]]
+then
+    while read line
+    do
+        JLINE="- $(date +'%H:%M'): $line"
+        echo $JLINE >> "$TODAY_JOURNAL"
+    done < "${1:-/dev/stdin}"
+else
+    touch $TODAY_JOURNAL
+    header_date="$(date +'%A %d %b %Y')"
+    echo -e "# $header_date\n" >> $TODAY_JOURNAL
+    while read line
+    do
+        JLINE="- $(date +'%H:%M'): $line"
+        echo $JLINE >> "$TODAY_JOURNAL"
+    done < "${1:-/dev/stdin}"
+fi
+
+
