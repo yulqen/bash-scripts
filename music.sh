@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -xe
-
 # nicked from https://hmbrg.xyz/log/2021/listen-to-audio-collection-via-dmenu-mpv/
 # ALl credit to them! Thank you.
 
@@ -10,7 +8,7 @@ set -xe
 ###  -----------------------------------------------------------------
 DIR=~/annex/Music
 PLAYER=mpv
-DMENU='dmenu -i -l 30 -nb yellow -nf black'
+DMENU='dmenu -i -l 30 -nb #b96dbf -nf white'
 
 ###  -----------------------------------------------------------------
 ###  Select the subdirectory from which you want to play the MP3 file:
