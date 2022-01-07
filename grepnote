@@ -3,7 +3,7 @@
 NOTES=/home/$USER/Notes
 RG_BIN=/usr/bin/rg
 GREP=/usr/bin/grep
-CMD="$RG_BIN --heading -i"
+CMD="$RG_BIN --heading -w -i -g !"*fish-history*" -g !"*.html*" -g !"*apt-packages*" -g !"*.json" -g !"*-fish-history*" -g !"*backup*""
 
 if [[ -z $1 ]]; then
     echo "You must provide a file name as the argument to this command."
@@ -18,8 +18,6 @@ if ! [[ -x $RG_BIN ]]; then
 fi
 
 # rg --heading -i "joanna" ~/Notes/journal/
-echo $TARGET
-echo $NOTES
 $CMD $TARGET $NOTES
 
 
