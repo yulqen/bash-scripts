@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Search ~/Notes/journal for a term and return as a markdown list sorted by date.
+
+# Automatic cleanup
+trap 'rm -f "$tmpfile"' EXIT
+tmpfile=$(mktemp) || exit 1
+
+# very bad way to check the params passed in...
+[[ -z "$2" ]] && [[ -n "$1" ]] && searchterm="$1"
+[[ -n "$2" ]] && [[ -n "$1" ]] && searchterm="$1" && flag="$2"
+
+# some confirmatory echoing
+echo "Search term: $searchterm"
+[[ -v flag ]] && echo "Flag: $flag"
+
+if [[ $flag != "-i" ]]; then
+    flag=""
+fi
+
+# do the business, starting with using grep to get the pertinent lines
+echo -e "$(grep -R $flag "$searchterm" /home/"$USER"/Notes/journal/)" > "$tmpfile"
+
+# more confirmatory text
+echo Command: 'grep -R $flag "$searchterm" /home/"$USER"/Notes/journal/'
+echo ""
+
+# subsitute to get the right format using sed
+sed -r -i 's/\/home\/lemon\/Notes\/journal\/([[:digit:]]*-[[:digit:]]*-[[:digit:]]*)\.md:-[[:blank:]](.*)/* \1 \2/' "$tmpfile"
+
+# output
+cat "$tmpfile" | sort
+
