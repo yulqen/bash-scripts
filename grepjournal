@@ -26,7 +26,7 @@ echo "Command: 'grep -R $flag $searchterm /home/"$USER"/Notes/journal/'"
 echo ""
 
 # subsitute to get the right format using sed
-sed -r -i 's/\/home\/lemon\/Notes\/journal\/([[:digit:]]*-[[:digit:]]*-[[:digit:]]*)\.md:-[[:blank:]](.*)/* \1 \2/' "$tmpfile"
+sed -r -i 's/\/home\/lemon\/Notes\/journal\/([[:digit:]]*-[[:digit:]]*-[[:digit:]]*)\.md:-[[:blank:]](.*)/\1 \2/' "$tmpfile"
 
 # output
 cat "$tmpfile" | sort
