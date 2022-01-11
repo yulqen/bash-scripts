@@ -6,6 +6,10 @@
 trap 'rm -f "$tmpfile"' EXIT
 tmpfile=$(mktemp) || exit 1
 
+termsize=$(stty size| awk '{print $2}')
+printf "=%.0s" $(seq $termsize)
+echo ""
+
 # very bad way to check the params passed in...
 [[ -z "$2" ]] && [[ -n "$1" ]] && searchterm="$1"
 [[ -n "$2" ]] && [[ -n "$1" ]] && searchterm="$1" && flag="$2"
@@ -23,6 +27,7 @@ echo -e "$(grep -R $flag "$searchterm" /home/"$USER"/Notes/journal/)" > "$tmpfil
 
 # more confirmatory text
 echo "Command: 'grep -R $flag $searchterm /home/"$USER"/Notes/journal/'"
+printf "=%.0s" $(seq $termsize)
 echo ""
 
 # subsitute to get the right format using sed
