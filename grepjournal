@@ -22,7 +22,7 @@ fi
 echo -e "$(grep -R $flag "$searchterm" /home/"$USER"/Notes/journal/)" > "$tmpfile"
 
 # more confirmatory text
-echo Command: 'grep -R $flag "$searchterm" /home/"$USER"/Notes/journal/'
+echo "Command: 'grep -R $flag $searchterm /home/"$USER"/Notes/journal/'"
 echo ""
 
 # subsitute to get the right format using sed
