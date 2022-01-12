@@ -4,7 +4,8 @@
 
 colourWhite="$(tput setaf 7)"
 colourGreen="$(tput setaf 2)"
-colourYellow="$(tput setaf 2)"
+colourYellow="$(tput setaf 3)"
+colorCyan="$(tput setaf 6)"
 txBold="$(tput bold)"
 txReset="$(tput sgr0)"
 
@@ -40,9 +41,12 @@ echo "Command: 'grep -R $flag $searchterm /home/"$USER"/Notes/journal/'"
 printf "=%.0s" $(seq $termsize)
 echo ""
 
+# URL regex
+
 
 # subsitute to get the right format using sed
 # form: 2022-01-10 12:49: :TODO Do the MyHR content: ht
+urlregex="(https?:\/\/([[:alnum:]]+\.)+([[:alnum:]]+)+.*\s?)"
 re='^/home/lemon/Notes/journal/([0-9]{4})-([0-9]{2})-([0-9]{2})\.md:-\s([0-9]{2}:[0-9]{2}):\s(.*)'
 while IFS=  read -r line; do
     if [[ $line =~ $re ]]; then
@@ -52,10 +56,16 @@ while IFS=  read -r line; do
         time=${BASH_REMATCH[4]}
         note=${BASH_REMATCH[5]}
     fi
-    echo ${colourGreen}"$year"-"$month"-"$day":${txReset} "$note" >> $output_file 
+    out_line="${colourGreen}"$year"-"$month"-"$day":${txReset} ${note}"
+    if [[ $out_line =~ $urlregex ]]; then
+        echo ${BASH_REMATCH[1]}
+    fi
+    if [[ $out_line =~ $searchterm ]]; then
+        o=${out_line/$searchterm/"${colourYellow}${txBold}$searchterm${txReset}"}
+        echo "$o" >> "$output_file" 
+    fi
 done < "$grepped_results"
-#sed -r -i 's/\/home\/lemon\/Notes\/journal\/([[:digit:]]*-[[:digit:]]*-[[:digit:]]*)\.md:-[[:blank:]](.*)/\1 \2/' "$grepped_results"
 
 # output
-cat "$output_file" | sort
+sort < "$output_file"
 
