@@ -31,8 +31,22 @@ printf "=%.0s" $(seq $termsize)
 echo ""
 
 # subsitute to get the right format using sed
-sed -r -i 's/\/home\/lemon\/Notes\/journal\/([[:digit:]]*-[[:digit:]]*-[[:digit:]]*)\.md:-[[:blank:]](.*)/\1 \2/' "$tmpfile"
+# TODO this to be replaced
+re='^/home/lemon/Notes/journal/([0-9]*[0-9]*)-([0-9]*[0-9]*)-([0-9]*[0-9]*)\.md: - ([0-9]*[0-9]*-[0-9]*[0-9]*)(.*)'
+while IFS=  read -r line; do
+    if [[ $line =~ $re ]]; then
+        year=${BASH_REMATCH[1]}
+        echo "$year"
+        month=${BASH_REMATCH[2]}
+        echo "$month"
+        day=${BASH_REMATCH[3]}
+        echo "$day"
+        note=${BASH_REMATCH[4]}
+        echo "$note"
+    fi
+done < "$tmpfile"
+#sed -r -i 's/\/home\/lemon\/Notes\/journal\/([[:digit:]]*-[[:digit:]]*-[[:digit:]]*)\.md:-[[:blank:]](.*)/\1 \2/' "$tmpfile"
 
 # output
-cat "$tmpfile" | sort
+# cat "$tmpfile" | sort
 
