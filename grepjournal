@@ -6,10 +6,16 @@
 # [[ -z "$2" ]] && [[ -n "$1" ]] && searchterm="$1"
 # [[ -n "$2" ]] && [[ -n "$1" ]] && searchterm="$1" && flag="$2"
 
+[[ $# -eq 0 ]] && echo "Do grepnotes -h"; exit 1
+
 while [[ $# -gt 0 ]]; do
     if [[ "$1" = "-i" ]]; then
         flag="-i"
         shift
+    elif [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
+        echo "Usage: grepjournal [WORD] [-i (case insensitve)] [-h (display this help)]"
+        echo "  Searches for WORD within all files within ~/Notes/journal. Displayed sorted by date."
+        exit
     else
         searchterm=$1
         shift
