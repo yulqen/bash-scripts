@@ -2,12 +2,14 @@
 
 # Search ~/Notes/journal for a term and return as a markdown list sorted by date.
 
-# very bad way to check the params passed in...
-# [[ -z "$2" ]] && [[ -n "$1" ]] && searchterm="$1"
-# [[ -n "$2" ]] && [[ -n "$1" ]] && searchterm="$1" && flag="$2"
+function usage {
+    echo
+    echo "Usage: grepjournal [WORD] [-i (case insensitve)] [-h (display this help)]"
+    echo "  Searches for WORD within all files within ~/Notes/journal. Displayed sorted by date."
+}
 
 if [[ $# -eq 0 ]]; then
-    echo "Do grepnotes -h"; exit 1
+    usage; exit 1
 fi
 
 while [[ $# -gt 0 ]]; do
@@ -15,8 +17,7 @@ while [[ $# -gt 0 ]]; do
         flag="-i"
         shift
     elif [[ "$1" = "-h" ]] || [[ "$1" = "--help" ]]; then
-        echo "Usage: grepjournal [WORD] [-i (case insensitve)] [-h (display this help)]"
-        echo "  Searches for WORD within all files within ~/Notes/journal. Displayed sorted by date."
+        usage
         exit
     else
         searchterm=$1
