@@ -6,7 +6,9 @@
 # [[ -z "$2" ]] && [[ -n "$1" ]] && searchterm="$1"
 # [[ -n "$2" ]] && [[ -n "$1" ]] && searchterm="$1" && flag="$2"
 
-[[ $# -eq 0 ]] && echo "Do grepnotes -h"; exit 1
+if [[ $# -eq 0 ]]; then
+    echo "Do grepnotes -h"; exit 1
+fi
 
 while [[ $# -gt 0 ]]; do
     if [[ "$1" = "-i" ]]; then
