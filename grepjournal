@@ -2,6 +2,20 @@
 
 # Search ~/Notes/journal for a term and return as a markdown list sorted by date.
 
+# very bad way to check the params passed in...
+# [[ -z "$2" ]] && [[ -n "$1" ]] && searchterm="$1"
+# [[ -n "$2" ]] && [[ -n "$1" ]] && searchterm="$1" && flag="$2"
+
+while [[ $# -gt 0 ]]; do
+    if [[ "$1" = "-i" ]]; then
+        flag="-i"
+        shift
+    else
+        searchterm=$1
+        shift
+    fi
+done
+
 _get_weekday() {
     local monday="# (Monday)"
     local tuesday="# (Tuesday)"
@@ -49,10 +63,6 @@ output_file=$(mktemp) || exit 1
 termsize=$(stty size| awk '{print $2}')
 printf "${colourWhite}=%.0s" $(seq $termsize)
 echo
-
-# very bad way to check the params passed in...
-[[ -z "$2" ]] && [[ -n "$1" ]] && searchterm="$1"
-[[ -n "$2" ]] && [[ -n "$1" ]] && searchterm="$1" && flag="$2"
 
 # some confirmatory echoing
 echo -e "${colourWhite}Search term: ${txBold}$searchterm${txReset}"
