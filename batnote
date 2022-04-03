@@ -39,4 +39,4 @@ if [[ -x $BAT ]]; then
 fi
 
 # Thanks to https://stackoverflow.com/a/1489405 for the find command to omit .git
-$CMD "$(find $NOTES -name '.git*' -type d -prune -o -type f -print|$FZF_BIN)"
+clear; $CMD "$(find $NOTES -name '.git*' -type d -prune -o -type f -print|$FZF_BIN)"
