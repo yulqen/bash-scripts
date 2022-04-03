@@ -12,9 +12,18 @@ VIM=/usr/bin/vim
 CMD=$LESS
 
 # instead of viewing with less, we want to edit in Vim
+if ! [[ -x $FZF_BIN ]]; then
+    echo "You need to have FZF installed for this to work."
+    exit 1
+fi
+
 if [[ $1 = "-v" ]]
 then
+  echo "Using vim..."
   CMD=$VIM
+  # Thanks to https://stackoverflow.com/a/1489405 for the find command to omit .git
+  $CMD "$(find $NOTES -name '.git*' -type d -prune -o -type f -print|$FZF_BIN)"
+  exit
 fi
 
 # if [[ -z $1 ]]; then
@@ -24,16 +33,10 @@ fi
 #     TARGET=$1
 # fi
 
-if ! [[ -x $FZF_BIN ]]; then
-    echo "You need to have FZF installed for this to work."
-    exit 1
-fi
 
 if [[ -x $BAT ]]; then
     CMD=$BAT
 fi
+
 # Thanks to https://stackoverflow.com/a/1489405 for the find command to omit .git
 $CMD "$(find $NOTES -name '.git*' -type d -prune -o -type f -print|$FZF_BIN)"
-
-
-
