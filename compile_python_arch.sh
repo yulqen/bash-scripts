@@ -9,10 +9,10 @@
 PYTHON_VERSION=$1
 
 echo "Updating system...."
-# sudo pacman -Syu --noconfirm
-# sudo pacman -S --noconfirm base-devel openssl zlib readline sqlite3 wget curl llvm ncurses xz
-# sudo apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm 
-# sudo apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev
+sudo pacman -Syu --noconfirm
+sudo pacman -S --noconfirm base-devel openssl zlib readline sqlite3 wget curl llvm ncurses xz
+sudo apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm 
+sudo apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev
 
 cd $HOME/Downloads
 

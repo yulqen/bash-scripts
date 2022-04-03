@@ -1,0 +1,11 @@
+#!/bin/bash
+
+NOTES=/home/$USER/Notes
+MOD_NOTES=$NOTES/mod
+VIM=/usr/bin/vim
+
+STAMP="$(date +%G%m%d%H%M%S)"
+F_PATH="$MOD_NOTES/$STAMP - $@.md"
+echo $F_PATH
+
+$VIM "$F_PATH"

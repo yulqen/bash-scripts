@@ -24,6 +24,6 @@ fi
 if [[ -x $BAT ]]; then
     CMD=$BAT
 fi
-$CMD "$NOTES/$(ls $NOTES|$FZF_BIN)"
+$CMD "$(find $NOTES|$FZF_BIN)"
 
 
