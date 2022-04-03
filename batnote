@@ -7,7 +7,15 @@ NOTES=/home/$USER/Notes
 FZF_BIN=/home/$USER/.fzf/bin/fzf
 BAT=/usr/bin/bat
 LESS=/usr/bin/less
+VIM=/usr/bin/vim
+
 CMD=$LESS
+
+# instead of viewing with less, we want to edit in Vim
+if [[ $1 = "-v" ]]
+then
+  CMD=$VIM
+fi
 
 # if [[ -z $1 ]]; then
 #     echo "You must provide a file name as the argument to this command."
@@ -24,6 +32,8 @@ fi
 if [[ -x $BAT ]]; then
     CMD=$BAT
 fi
-$CMD "$(find $NOTES|$FZF_BIN)"
+# Thanks to https://stackoverflow.com/a/1489405 for the find command to omit .git
+$CMD "$(find $NOTES -name '.git*' -type d -prune -o -type f -print|$FZF_BIN)"
+
 
 
