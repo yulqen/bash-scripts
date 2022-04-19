@@ -1,0 +1,21 @@
+#!/usr/local/bin/bash
+
+NOTES=/home/$USER/Notes
+TARGET_DIR=$NOTES/homezet
+VIM=/usr/local/bin/vim
+
+if [[ "$1" = "-m" ]]; then
+    msg="${*:2}"
+    TARGET_DIR=$NOTES/modzet
+    shift
+else
+    msg="$@"
+    shift
+fi
+
+
+STAMP="$(date +%G%m%d%H%M%S)"
+F_PATH="$TARGET_DIR/$STAMP-$msg.md"
+echo $F_PATH
+
+$VIM "$F_PATH"

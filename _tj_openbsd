@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash
 
 # Our target file
 TODAY_JOURNAL=~/Notes/journal/$(date +\%Y-\%m-\%d).md
