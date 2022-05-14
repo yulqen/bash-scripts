@@ -1,15 +1,14 @@
-#!/usr/local/bin/bash
+#!/bin/ksh
 
 # a script for FZFing through my Notes folder for quick reading.
 # Uses bat if installed, otherwise will use less.
 
-NOTES=/home/$USER/Notes
-FZF_BIN=/home/$USER/.fzf/bin/fzf
-BAT=/usr/bin/bat
-LESS=/usr/bin/less
-VIM=/usr/local/bin/vim
+NOTES="/home/$USER/Notes"
+FZF_BIN="/home/$USER/.fzf/bin/fzf"
+CAT="/usr/bin/less"
+VIM="/usr/local/bin/vim"
 
-CMD=$LESS
+CMD="$CAT"
 
 # instead of viewing with less, we want to edit in Vim
 if ! [[ -x $FZF_BIN ]]; then
@@ -48,9 +47,6 @@ fi
 # fi
 
 
-if [[ -x $BAT ]]; then
-    CMD=$BAT
-fi
 
 # Thanks to https://stackoverflow.com/a/1489405 for the find command to omit .git
 clear; $CMD "$(find $NOTES -name '.git*' -type d -prune -o -type f -print|$FZF_BIN)"
