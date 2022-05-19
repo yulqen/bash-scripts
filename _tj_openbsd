@@ -15,7 +15,6 @@ else
     touch "$TODAY_JOURNAL"
     header_date="$(date +'%A %d %b %Y')"
     {   echo -e "# $header_date\n"
-        echo -e "## Journal\n"
     } >> "$TODAY_JOURNAL"
     while read -r line
     do
