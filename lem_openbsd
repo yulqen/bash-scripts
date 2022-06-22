@@ -16,6 +16,7 @@ fi
 
 STAMP="$(date +%G%m%d%H%M%S)"
 F_PATH="$TARGET_DIR/$STAMP-$msg.md"
-echo $F_PATH
+
+printf "# %s", "$msg" >> "$F_PATH"
 
 $VIM "$F_PATH"
