@@ -32,7 +32,7 @@ fi
 
 create_venvs() {
     cd $1
-    print "\nCreating the virtualenv at $1/.venv. This might take a couple of minutes..."
+    print "Creating the virtualenv at $1/.venv. This might take a couple of minutes..."
     print -n "Creating virtualenv..."
     python3 -m venv .venv
     . ./.venv/bin/activate
@@ -92,8 +92,8 @@ if [ $INC_CODE -eq 1 ]; then
   print -n "Fetching bcompiler-engine..."
   if [ ! -d $bcompiler_src ]; then
     git clone git@github.com:yulqen/bcompiler-engine.git $bcompiler_src > /dev/null 2>&1
-    create_venvs $bcompiler_src
     print "ok"
+    create_venvs $bcompiler_src
   else
     print "bcompiler-engine directory already exists."
   fi
