@@ -31,7 +31,7 @@ done
 
 command -v vim > /dev/null 2>&1
 if [ "$?" != 0 ]; then
-  doas pkg-add vim
+  doas pkg_add vim
 fi
 
 
