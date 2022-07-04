@@ -1,12 +1,5 @@
 #!/bin/ksh
 
-# Send in id_rsa.pub and id_rsa
-# send in /etc/doas.conf and install and chown root:wheel /etc/doas.conf
-# pkg_add git in guest
-# send in openbsddotfiles/profile_vm_provisioning (or similar) and rename to .profile
-# source .profile in guest
-# send in THIS FILE AND EXECUTE IT ON THERE
-
 # download ISO from https://cdn.openbsd.org/pub/OpenBSD/$(uname -r)/amd64/install71.iso
 
 INC_CODE=0
@@ -15,6 +8,7 @@ INC_CODE=0
 usage()
 {
   print "Usage: $0 [-c]"
+  print -R '-c - require repositories to be downloaded from github'
   exit 2
 }
 
@@ -27,13 +21,37 @@ do
   esac
 done
 
-
+dbasik_src=~/code/python/dbasik
+datamaps_src=~/code/python/datamaps
+bcompiler_src=~/code/python/bcompiler-engine
 
 command -v vim > /dev/null 2>&1
 if [ "$?" != 0 ]; then
   doas pkg_add vim
 fi
 
+create_venvs() {
+    cd $1
+    print "\nCreating the virtualenv at $1/.venv. This might take a couple of minutes..."
+    print -n "Creating virtualenv..."
+    python3 -m venv .venv
+    . ./.venv/bin/activate
+    print "ok"
+    if [ -a requirements.txt ]; then
+      print -n "Installing from requirements.txt..."
+      pip install -r requirements.txt > /dev/null 2>&1
+      pip install -U pip > /dev/null 2>&1
+      print "ok"
+    fi
+    if [ -a requirements_dev.txt ]; then
+      print -n "Installing from requirements_dev.txt..."
+      pip install -r requirements_dev.txt > /dev/null 2>&1
+      pip install -U pip > /dev/null 2>&1
+      print "ok"
+    fi
+    deactivate && cd ~
+    print "virtualenv created"
+}
 
 doas pkg_add fzf the_silver_searcher zip 
 
@@ -47,31 +65,34 @@ if [ $INC_CODE -eq 1 ]; then
 
   print -n "Fetching dotfiles..."
   if [ ! -d ~/openbsddotfiles ]; then
-    git clone git@github.com:yulqen/openbsddotfiles.git ~/openbsddotfiles 2>&1 > /dev/null
+    git clone git@github.com:yulqen/openbsddotfiles.git ~/openbsddotfiles > /dev/null 2>&1
     print "ok"
   else
     print "dotfiles directory already exists."
   fi
 
   print -n "Fetching dbasik..."
-  if [ ! -d ~/code/python/dbasik ]; then
-    git clone git@github.com:yulqen/dbasik.git ~/code/python/dbasik  2>&1 > /dev/null
+  if [ ! -d $dbasik_src ]; then
+    git clone git@github.com:yulqen/dbasik.git $dbasik_src > /dev/null 2>&1
     print "ok"
+    create_venvs $dbasik_src
   else
     print "dbasik directory already exists."
   fi
 
   print -n "Fetching datamaps..."
-  if [ ! -d ~/code/python/datamaps ]; then
-    git clone git@github.com:yulqen/datamaps.git ~/code/python/datamaps 2>&1 > /dev/null
+  if [ ! -d $datamaps_src ]; then
+    git clone git@github.com:yulqen/datamaps.git $datamaps_src > /dev/null 2>&1
     print "ok"
+    create_venvs $datamaps_src
   else
     print "datamaps directory already exists."
   fi
 
   print -n "Fetching bcompiler-engine..."
-  if [ ! -d ~/code/python/bcompiler-engine ]; then
-    git clone git@github.com:yulqen/bcompiler-engine.git ~/code/python/bcompiler-engine 2>&1 > /dev/null
+  if [ ! -d $bcompiler_src ]; then
+    git clone git@github.com:yulqen/bcompiler-engine.git $bcompiler_src > /dev/null 2>&1
+    create_venvs $bcompiler_src
     print "ok"
   else
     print "bcompiler-engine directory already exists."
