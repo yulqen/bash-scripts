@@ -24,6 +24,7 @@ done
 dbasik_src=~/code/python/dbasik
 datamaps_src=~/code/python/datamaps
 bcompiler_src=~/code/python/bcompiler-engine
+ded_src=~/code/python/ded
 
 command -v vim > /dev/null 2>&1
 if [ "$?" != 0 ]; then
@@ -69,6 +70,15 @@ if [ $INC_CODE -eq 1 ]; then
     print "ok"
   else
     print "dotfiles directory already exists."
+  fi
+
+  print -n "Fetching ded..."
+  if [ ! -d $ded_src ]; then
+    git clone git@gitlab.com:yulqen/ded.git $ded_src > /dev/null 2>&1
+    print "ok"
+    create_venvs $ded_src
+  else
+    print "dbasik directory already exists."
   fi
 
   print -n "Fetching dbasik..."
