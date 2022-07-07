@@ -54,7 +54,7 @@ create_venvs() {
     print "virtualenv created"
 }
 
-doas pkg_add fzf the_silver_searcher zip 
+doas pkg_add ectags fzf the_silver_searcher zip 
 
 if [ $INC_CODE -eq 1 ]; then
   ssh-add -v
