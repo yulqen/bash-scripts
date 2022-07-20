@@ -6,12 +6,12 @@ timelog="/home/lemon/Documents/Budget/ledger/2021/timetracking.ledger"
 
 # clock in
 _t_in() {
-  printf "\ni %s %s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$*" >>  "$timelog"
+  printf "i %s %s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$*" >>  "$timelog"
 }
 
 # clock out
 _t_out() {
-  printf "o %s %s\n" "$(date '+%Y-%m-%d %H:%M:%S')" "$*" >>  "$timelog"
+  printf "o %s %s" "$(date '+%Y-%m-%d %H:%M:%S')" "$*" >>  "$timelog"
 }
 
 _t_cur() {
