@@ -1,0 +1,24 @@
+#!/usr/local/bin/bash
+
+URL=https://en.m.wiktionary.org/wiki/
+URLT=https://www.wordnik.com/words/WORD#relate
+CMD=lynx
+
+function usage {
+    echo
+    echo "Usage: dic [WORD] [-t (search thesaurus)] [-h (display this help)]"
+    echo "  Searches for WORD at wiktionary. If -t is passed, then searches for word at wordnik, using their synonyms feature."
+}
+
+if [[ $# -eq 0 ]]; then
+  usage
+  exit 1
+fi
+
+if [[ "$1" = "-t" ]]; then
+  URLTx=${URLT/WORD/$2}
+  $CMD "$URLTx"
+  shift
+else
+  $CMD "$URL$1"
+fi
