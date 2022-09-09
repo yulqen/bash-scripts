@@ -2,6 +2,12 @@
 
 # our target file
 DATE=$(date +\%Y-\%m-\%d)
+
+if [ $# -ne  0 ]
+then
+  DATE=$1
+fi
+
 TODAY_PLANNER=~/Notes/journal/day_plans/$DATE.txt
 
 if [[ -a $TODAY_PLANNER ]]
