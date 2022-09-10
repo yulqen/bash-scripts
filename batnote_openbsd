@@ -4,7 +4,7 @@
 # Uses bat if installed, otherwise will use less.
 
 NOTES="/home/$USER/Notes"
-FZF_BIN="/home/$USER/.fzf/bin/fzf"
+FZF_BIN="/usr/local/bin/fzf"
 CAT="/usr/bin/less"
 VIM="/usr/local/bin/vim"
 
