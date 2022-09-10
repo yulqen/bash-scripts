@@ -15,7 +15,8 @@ else
 Goal for Today: [replace this with your goal]
 ---
 
-08:45 - 09:10 - Sophie to school
+08:15 - 08:20 - Harvey to school
+08:45 - 09:00 - Sophie to school
 09:15 - 09:30 - Email 
 09:30 - 10:00 - 
 10:00 - 11:00 - 
