@@ -30,7 +30,8 @@ Goal for Today: [replace this with your goal]
 13:00 - 14:00 - 
 14:00 - 15:00 -
 15:00 - 16:00 - 
-16:00 - 17:00 - "
+16:00 - 17:00 -
+"
   } > "$TODAY_PLANNER"
   vim "$TODAY_PLANNER"
 fi
