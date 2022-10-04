@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+if [[ $1 = "-v" ]]
+then
+  CMD=vim
+else
+  CMD=cat
+  # $CMD $(find /home/lemon/Notes/journal -name "*$(date '+%Y-%m-%d')*")
+  $CMD $(find /home/lemon/Notes/journal -name \*$(date '+%Y-%m-%d'\*))
+fi
+
