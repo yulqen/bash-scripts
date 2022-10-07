@@ -1,8 +1,8 @@
-#!/usr/local/bin/bash
+#!/usr/bin/bash
 
 NOTES=/home/$USER/Notes
 TARGET_DIR=$NOTES/homezet
-VIM=/usr/local/bin/vim
+VIM=/usr/bin/vim
 
 if [[ "$1" = "-m" ]]; then
     msg="${*:2}"
