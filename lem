@@ -1,12 +1,12 @@
 #!/usr/bin/bash
 
 NOTES=/home/$USER/Notes
-TARGET_DIR=$NOTES/homezet
+TARGET_DIR=/home/lemon/Notes/homezet
 VIM=/usr/bin/vim
 
 if [[ "$1" = "-m" ]]; then
     msg="${*:2}"
-    TARGET_DIR=$NOTES/modzet
+    TARGET_DIR=/home/lemon/Documents/MODObsidian/MOD
     shift
 else
     msg="$@"
