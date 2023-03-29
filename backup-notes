@@ -11,4 +11,4 @@ remote_folder="/home/lemon/Backups/Notes"
 ssh_key="/home/lemon/.ssh/id_rsa"
 
 # Run rsync command to sync the folders
-rsync -avz -e "ssh -p ${remote_port} -i ${ssh_key}" ${src_folder} ${remote_user}@${remote_host}:${remote_folder}
+rsync -avz -e "ssh -p ${remote_port} -i ${ssh_key} -o \"StrictHostKeyChecking=no\"" ${src_folder} ${remote_user}@${remote_host}:${remote_folder}
