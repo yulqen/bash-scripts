@@ -3,7 +3,7 @@
 # this script replaces tjclip fish function which relied on _tj.
 
 # Our target file
-TODAY_JOURNAL=~/Documents/Notes/journal/$(date +\%Y-\%m-\%d).md
+TODAY_JOURNAL=~/Documents/Notes/journal/home/$(date +\%Y-\%m-\%d).md
 URL="$(xclip -o clipboard clipboard)"
 
 # Test whether it already exisits or not
