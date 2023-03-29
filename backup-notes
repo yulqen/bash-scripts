@@ -1,0 +1,13 @@
+#!/bin/env bash
+
+# Source folder to be backed up
+src_folder="/home/lemon/Documents/Notes/"
+
+# Remote server details
+remote_user="lemon"
+remote_host="16693433.xyz"
+remote_port="2222"
+remote_folder="/home/lemon/Backups/Notes"
+
+# Run rsync command to sync the folders
+rsync -avz -e "ssh -p ${remote_port}" ${src_folder} ${remote_user}@${remote_host}:${remote_folder}

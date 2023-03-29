@@ -1,0 +1,6 @@
+[Unit]
+Description=Backup notes to remote server
+
+[Service]
+Type=oneshot
+ExecStart=/home/lemon/code/bash/backup-notes
