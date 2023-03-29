@@ -2,6 +2,7 @@
 Description=Run backup-notes service every 30 minutes
 
 [Timer]
+OnBootSec=10m
 OnUnitActiveSec=30m
 Unit=backup-notes.service
 
