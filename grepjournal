@@ -82,17 +82,20 @@ if [[ $flag != "-i" ]]; then
 fi
 
 # do the business, starting with using grep to get the pertinent lines
-echo -e "$(grep -R $flag "$searchterm" /home/"$USER"/Notes/journal/)" > "$grepped_results"
+echo -e "$(grep -R $flag "$searchterm" /home/"$USER"/Notes/journal/home)" > "$grepped_results"
 
 # more confirmatory text
-echo "Command: 'grep -R $flag $searchterm /home/"$USER"/Notes/journal/'"
+echo "Command: 'grep -R $flag $searchterm /home/"$USER"/Notes/journal/home'"
 
 printf "=%.0s" $(seq $termsize)
 echo ""
 
 # because I can't get the regex right, I am searching for http or https to indicate a link in a line
 urlregex="https?"
-re='(^/home/lemon/Notes/journal/([0-9]{4})-([0-9]{2})-([0-9]{2})\.md):-\s([0-9]{2}:[0-9]{2}):\s(.*)'
+re='(^/home/lemon/Notes/journal/home/([0-9]{4})-([0-9]{2})-([0-9]{2})\.md):-\s([0-9]{2}:[0-9]{2}):\s(.*)'
+
+declare -A processed_lines
+
 while IFS=  read -r line; do
     if [[ $line =~ $re ]]; then
         path=${BASH_REMATCH[1]}
@@ -110,7 +113,10 @@ while IFS=  read -r line; do
     if [[ $out_line =~ $searchterm ]]; then
         out_line=${out_line/$searchterm/"${colourOrange}${txBold}$searchterm${txReset}"}
     fi
-    echo -e "$out_line" >> "$output_file" 
+    if [[ ! ${processed_lines[$out_line]} ]]; then
+              processed_lines[$out_line]=1
+              echo -e "$out_line" >> "$output_file" 
+    fi
 done < "$grepped_results"
 
 # output
