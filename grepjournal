@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Search ~/Notes/journal for a term and return as a markdown list sorted by date.
+# Search ~/Documents/Notes/journal for a term and return as a markdown list sorted by date.
 
 function usage {
     echo
     echo "Usage: grepjournal [WORD] [-i (case insensitve)] [-h (display this help)]"
-    echo "  Searches for WORD within all files within ~/Notes/journal. Displayed sorted by date."
+    echo "  Searches for WORD within all files within ~/Documents/Notes/journal. Displayed sorted by date."
 }
 
 if [[ $# -eq 0 ]]; then
@@ -82,17 +82,17 @@ if [[ $flag != "-i" ]]; then
 fi
 
 # do the business, starting with using grep to get the pertinent lines
-echo -e "$(grep -R $flag "$searchterm" /home/"$USER"/Notes/journal/home)" > "$grepped_results"
+echo -e "$(grep -R $flag "$searchterm" /home/"$USER"/Documents/Notes/journal/home/)" > "$grepped_results"
 
 # more confirmatory text
-echo "Command: 'grep -R $flag $searchterm /home/"$USER"/Notes/journal/home'"
+echo "Command: 'grep -R $flag $searchterm /home/"$USER"/Documents/Notes/journal/home/'"
 
 printf "=%.0s" $(seq $termsize)
 echo ""
 
 # because I can't get the regex right, I am searching for http or https to indicate a link in a line
 urlregex="https?"
-re='(^/home/lemon/Notes/journal/home/([0-9]{4})-([0-9]{2})-([0-9]{2})\.md):-\s([0-9]{2}:[0-9]{2}):\s(.*)'
+re='(^/home/lemon/Documents/Notes/journal/home/([0-9]{4})-([0-9]{2})-([0-9]{2})\.md):-\s([0-9]{2}:[0-9]{2}):\s(.*)'
 
 declare -A processed_lines
 
