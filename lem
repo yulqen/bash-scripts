@@ -6,7 +6,7 @@ VIM=/usr/bin/vim
 
 if [[ "$1" = "-m" ]]; then
     msg="${*:2}"
-    TARGET_DIR=/home/lemon/Documents/MOD/modzet
+    TARGET_DIR=/home/lemon/Documents/Notes/MOD/modzet
     shift
 else
     msg="$@"
