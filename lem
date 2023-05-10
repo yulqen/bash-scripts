@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
-NOTES=/home/$USER/Notes
-TARGET_DIR=/home/lemon/Notes/homezet
+NOTES=/home/$USER/Documents/Notes
+TARGET_DIR=/home/lemon/Documents/Notes/homezet
 VIM=/usr/bin/vim
 
 if [[ "$1" = "-m" ]]; then
