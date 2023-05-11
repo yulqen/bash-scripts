@@ -1,8 +1,8 @@
-#!/usr/local/bin/bash
+#!/usr/bin/bash
 
 # ripping off https://github.com/colindean/hejmo/blob/master/scripts/t
 
-timelog="/home/lemon/Documents/Budget/ledger/2021/timetracking.ledger"
+timelog="/home/lemon/Budget/ledger/timetracking.ledger"
 
 # clock in
 _t_in() {
@@ -19,11 +19,11 @@ _t_cur() {
 }
 
 _t_bal() {
-	ledger -f "${timelog}" bal
+	hledger -f "${timelog}" bal
 }
 
 _t_reg() {
-	ledger -f "${timelog}" reg
+	hledger -f "${timelog}" reg
 }
 
 # this doesn't work in OpenBSD because of the date issue

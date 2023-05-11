@@ -1,8 +1,8 @@
-#!/usr/local/bin/bash
+#!/usr/bin/bash
 
 # Renaming files of the format YYYYMMDDHHMMSS-title text etc.md is a massive pain, so this script does it for you.
 
-NOTES=/home/$USER/Notes/modzet
+NOTES=/home/$USER/Documents/Notes/modzet
 
 function usage {
     echo
@@ -15,7 +15,7 @@ if [[ $# -eq 0 ]]; then
     usage; exit 1
 fi
 
-# path must be of form /home/$USER/Notes/modzet/20220419133511-Title of file.md
+# path must be of form /home/$USER/Documents/Notes/modzet/20220419133511-Title of file.md
 
 #re='^/tmp\/Notes\/modzet\/(.{14})-(.+)\.md'
 re='^/home\/lemon\/Notes\/modzet\/(.{14})-(.+)\.md'
