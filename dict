@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/usr/bin/bash
 
 URL=https://en.m.wiktionary.org/wiki/
 URLT=https://www.wordnik.com/words/WORD#relate
