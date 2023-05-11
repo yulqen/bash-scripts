@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Our target file
-TODAY_JOURNAL=~/Notes/journal/home/$(date +\%Y-\%m-\%d).md
+TODAY_JOURNAL=~/Documents/Notes/journal/home/$(date +\%Y-\%m-\%d).md
 
 # Test whether it already exisits or not
 if [[ -a $TODAY_JOURNAL ]]
