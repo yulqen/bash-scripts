@@ -13,9 +13,11 @@ else
     shift
 fi
 
+# Replace spaces with underscores in the file name
+file_name=${msg// /_}
 
 STAMP="$(date +%G%m%d%H%M%S)"
-F_PATH="$TARGET_DIR/$STAMP-$msg.md"
+F_PATH="$TARGET_DIR/$STAMP-$file_name.md"
 
 printf "# %s" "$msg" >> "$F_PATH"
 
