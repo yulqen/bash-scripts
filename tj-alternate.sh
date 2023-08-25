@@ -24,7 +24,7 @@ shift $((OPTIND-1))
 
 # Set TODAY_JOURNAL to the default value or the custom value depending on the flag
 if [ "$USE_CUSTOM_JOURNAL" = true ]; then
-  TODAY_JOURNAL=~/Documents/Notes/journal/work/MOD-$(date +\%Y-\%m-\%d).md
+  TODAY_JOURNAL=~/Documents/Notes/MOD/work_journal/$(date +\%Y-\%m-\%d).md
 else
   TODAY_JOURNAL="$DEFAULT_JOURNAL"
 fi
