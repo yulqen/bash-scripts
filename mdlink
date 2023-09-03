@@ -1,0 +1,10 @@
+#!/bin/bash
+#
+# from https://facedragons.com/foss/build-a-foss-second-brain-in-vim/?utm_source=twitter&utm_medium=social&utm_campaign=ReviveOldPost
+# The idea is that you call this script, type in a search term and dmenu presents a list of files in Notes that contain the
+# term. Hitting enter puts it on the clip board and you can paste it into a vim file to get a link.
+
+SEARCHTERM=$(echo "" | dmenu)
+
+CHOSENFILE=$(grep -rnwli /home/lemon/Documents/Notes -e "$SEARCHTERM" | sed 's/\/home\/lemon\/Documents\/Notes\///' | dmenu -l 20)
+echo $CHOSENFILE | xclip -selection c
