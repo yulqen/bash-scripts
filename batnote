@@ -3,8 +3,8 @@
 # a script for FZFing through my Notes folder for quick reading.
 # Uses bat if installed, otherwise will use less.
 
-NOTES=/home/$USER/Notes
-FZF_BIN=/home/$USER/.fzf/bin/fzf
+NOTES=/home/$USER/Documents/Notes
+FZF_BIN=/usr/bin/fzf
 BAT=/usr/bin/bat
 LESS=/usr/bin/less
 VIM=/usr/bin/vim
