@@ -8,7 +8,7 @@
 ###  -----------------------------------------------------------------
 DIR=~/annex/Music
 PLAYER=mpv
-DMENU='dmenu -i -l 30 -nb #b96dbf -nf white'
+DMENU='dmenu -i -l 30 -fn Iosevka-12 -nb #b96dbf -nf white'
 
 ###  -----------------------------------------------------------------
 ###  Select the subdirectory from which you want to play the MP3 file:
