@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
 # this script replaces tjclip fish function which relied on _tj.
+set -euxo pipefail
 
 # Our target file
 TODAY_JOURNAL=~/Documents/Notes/journal/home/$(date +\%Y-\%m-\%d).md
-URL="$(xclip -o clipboard clipboard)"
+URL="$(xclip -select clipboard -o)"
 
 # Test whether it already exisits or not
 if [[ -a $TODAY_JOURNAL ]]
