@@ -3,7 +3,7 @@
 curdir=~/Documents/Notes/current/
 
 if [[ -d $curdir ]]; then
-    ls "$curdir/"
+    ls -1 "$curdir/"
 else
     echo "The ~/Documents/Notes/current directory does not exist. Please create it to proceed."
     exit 1
