@@ -6,17 +6,20 @@
 NOTES=/home/$USER/Documents/Notes
 FZF_BIN=/usr/bin/fzf
 BAT=/usr/bin/bat
-LESS=/usr/bin/less
+CAT=/usr/bin/cat
+#LESS=/usr/bin/less
 VIM=/usr/bin/vim
 
-CMD=$LESS
+set -e
 
-# instead of viewing with less, we want to edit in Vim
+CMD="$BAT"
+
 if ! [[ -x $FZF_BIN ]]; then
     echo "You need to have FZF installed for this to work."
     exit 1
 fi
 
+# instead of viewing with less, we want to edit in Vim
 if [[ $1 = "-v" ]]
 then
   echo "Using vim..."
@@ -34,9 +37,9 @@ fi
 # fi
 
 
-if [[ -x $BAT ]]; then
-    CMD=$BAT
-fi
+# if [[ -x $BAT ]]; then
+#     CMD=$CAT
+# fi
 
 # Thanks to https://stackoverflow.com/a/1489405 for the find command to omit .git
 clear; $CMD "$(find $NOTES -name '.git*' -type d -prune -o -type f -print|$FZF_BIN)"
