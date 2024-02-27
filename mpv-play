@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+if [[ -z $1 ]]; then 
+    echo "You need to pass the URL."
+    exit 0
+fi
+
+URL="$1"
+mpv --profile=fast --hwdec=auto-safe  "$URL"
