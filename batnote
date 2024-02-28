@@ -10,6 +10,11 @@ CAT=/usr/bin/cat
 #LESS=/usr/bin/less
 VIM=/usr/bin/vim
 
+# it is batcat on Debian hosts
+if [[ -x /usr/bin/batcat ]]; then
+    BAT=/usr/bin/batcat
+fi
+
 set -e
 
 CMD="$BAT"
