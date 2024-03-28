@@ -6,7 +6,7 @@
 ###  -----------------------------------------------------------------
 ###  Global variables:
 ###  -----------------------------------------------------------------
-DIR=~/annex/Music
+DIR=~/music_mnt/annex/Music
 PLAYER=mpv
 DMENU='dmenu -i -l 30 -fn Iosevka-12 -nb #b96dbf -nf white'
 
