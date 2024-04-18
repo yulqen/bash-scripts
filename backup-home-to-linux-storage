@@ -1,0 +1,1 @@
+rsync -av --exclude='.cache' --exclude='.fgfs' --exclude='vms' /home/lemon/ /mnt/home_backup_mar24/
