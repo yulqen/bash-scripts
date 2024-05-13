@@ -14,7 +14,7 @@ comment="$2"
 formatted_date=$(date -d "$date" +"%Y-%m-%d %H:%M:%S")
 
 # SQLite command to insert the record
-sqlite3 ~/Documents/Notes/jobblylogger.db "INSERT INTO jobbies (date, comments) VALUES ('$formatted_date', '$comment');"
+sqlite3 ~/Documents/Notes/jobbylogger.db "INSERT INTO jobbies (date, comments) VALUES ('$formatted_date', '$comment');"
 
 # Check if the insertion was successful
 if [ $? -eq 0 ]; then
