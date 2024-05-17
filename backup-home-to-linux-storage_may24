@@ -1,0 +1,3 @@
+#!/usr/bin/sh
+
+rsync -av --exclude='seagate_mnt' --exclude='.cache' --exclude=.mozilla --exclude=annex --exclude='.fgfs' --exclude='vms' --exclude='.local/share/Steam' --delete /home/lemon/ /linuxstorage/home_backup_mar24/
