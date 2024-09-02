@@ -5,11 +5,11 @@
 PYTHON_VERSION=$1
 
 #echo "Updating system...."
-#sudo apt update
-#sudo apt upgrade
-#sudo apt-get install -y make build-essential libssl-dev zlib1g-dev
-#sudo apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
-#sudo apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev
+sudo apt update
+sudo apt upgrade
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev
+sudo apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
+sudo apt-get install -y libncurses5-dev  libncursesw5-dev xz-utils tk-dev
 
 cd $HOME/Downloads
 
