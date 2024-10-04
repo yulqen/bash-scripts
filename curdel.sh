@@ -2,7 +2,6 @@
 
 curdir=~/Documents/Notes/current/
 file=$(find $curdir -type l |fzf)
-echo $file
 
 if [[ -d $curdir ]]; then
     unlink "$file"
