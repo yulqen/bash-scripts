@@ -60,6 +60,14 @@ list_MOD_entries_on_date() {
     psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, entry, date_added::DATE from journal_entries WHERE date_added::date = '$target_date' AND type = 1;"
 }
 
+list_MOD_meeting_entries() {
+    meeting_id=$1  # Change this to take the first argument directly
+	psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT journal_entries.id, entry, date_added, meetings.name FROM public.journal_entries
+													inner join meetings on journal_entries.meeting_id = meetings.id
+													WHERE meetings.id = $meeting_id
+													ORDER BY id ASC;"
+}
+
 # Function to list all MOD contacts
 list_MOD_contacts() {
     psql -h "$HOST" -U "$USER" -d "$DB_CONTACTS" -c "SELECT id, first_name, last_name, email, phone, contact_comments FROM contacts WHERE contact_type = 3;"
@@ -84,11 +92,13 @@ add_meeting() {
 
 # Function to add a journal entry for an existing meeting
 add_entry_to_meeting() {
-    meeting_id=$1
+    meeting_id=$1  # Change this to take the first argument directly
     echo "Enter your journal entry for meeting ID $meeting_id:"
     read entry
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "INSERT INTO journal_entries (entry, meeting_id) VALUES ('$entry', $meeting_id);"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "INSERT INTO journal_entries (entry, meeting_id, type) VALUES ('$entry', $meeting_id, 1);"
 }
+
+
 
 # Main script logic
 case "$1" in
@@ -118,15 +128,22 @@ case "$1" in
     -F)
         list_MOD_meetings
         ;;
+    -G)
+        if [ -z "$2" ]; then
+            echo "Error: Meeting ID is required when using -G option."
+            exit 1
+        fi
+        list_MOD_meeting_entries "$2"
+        ;;
     -e)
         add_meeting
         ;;
     -E)
-        if [ -n "$2" ]; then
-            add_entry_to_meeting "$2"
-        else
-            echo "Error: Meeting ID required."
+        if [ -z "$2" ]; then
+            echo "Error: Meeting ID is required when using -E option."
+            exit 1
         fi
+        add_entry_to_meeting "$2"
         ;;
     *)
         echo "Usage:"
@@ -139,6 +156,7 @@ case "$1" in
         echo "  tjp -M - Select all MOD entries"
         echo "  tjp -D - Select MOD entries on date"
         echo "  tjp -F - Select all MOD meetings"
+        echo "  tjp -G - Select all MOD meeting entries"
         echo "  tjp -e - Add new meeting (returns meeting ID)"
         echo "  tjp -E ID - Add new journal entry for meeting whose ID is ID"
         ;;
