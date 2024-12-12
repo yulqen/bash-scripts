@@ -38,6 +38,13 @@ list_personal_entries() {
     psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, date_added, entry, comment FROM journal_entries WHERE type = 2;"
 }
 
+# Funtion to list personel entries by date
+list_personal_entries_on_date() {
+    echo "Enter meeting date (YYYY-MM-DD):"
+    read target_date
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, entry, date_added::DATE from journal_entries WHERE date_added::date = '$target_date' AND type = 2;"
+}
+
 # Function to select all MOD entries
 # list_MOD_entries() {
 #     psql -h "$HOST" -U "$USER" -d "$DB" -c "\x" -c "SELECT * FROM journal_entries WHERE type = 1;"
@@ -46,6 +53,12 @@ list_MOD_entries() {
     psql -h "$HOST" -U "$USER" -d "$DB" -c "\x" -c "SELECT id, date_added, entry, comment, meeting_id FROM journal_entries WHERE type = 1;"
 }
 
+# Funtion to list MOD entries by date
+list_MOD_entries_on_date() {
+    echo "Enter meeting date (YYYY-MM-DD):"
+    read target_date
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, entry, date_added::DATE from journal_entries WHERE date_added::date = '$target_date' AND type = 1;"
+}
 
 # Function to list all MOD contacts
 list_MOD_contacts() {
@@ -93,8 +106,14 @@ case "$1" in
     -l)
         list_personal_entries
         ;;
+    -L)
+        list_personal_entries_on_date
+        ;;
     -M)
         list_MOD_entries
+        ;;
+    -D)
+        list_MOD_entries_on_date
         ;;
     -F)
         list_MOD_meetings
@@ -116,7 +135,9 @@ case "$1" in
         echo "  tjp -C - Add MOD contact"
         echo "  tjp -Y - Select all MOD contacts"
         echo "  tjp -l - Select all personal entries"
+        echo "  tjp -L - Select personal entries by date"
         echo "  tjp -M - Select all MOD entries"
+        echo "  tjp -D - Select MOD entries on date"
         echo "  tjp -F - Select all MOD meetings"
         echo "  tjp -e - Add new meeting (returns meeting ID)"
         echo "  tjp -E ID - Add new journal entry for meeting whose ID is ID"
