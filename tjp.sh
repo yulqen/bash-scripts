@@ -39,9 +39,13 @@ list_personal_entries() {
 }
 
 # Function to select all MOD entries
+# list_MOD_entries() {
+#     psql -h "$HOST" -U "$USER" -d "$DB" -c "\x" -c "SELECT * FROM journal_entries WHERE type = 1;"
+# }
 list_MOD_entries() {
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "\x" -c "SELECT * FROM journal_entries WHERE type = 1;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "\x" -c "SELECT id, date_added, entry, comment, meeting_id FROM journal_entries WHERE type = 1;"
 }
+
 
 # Function to list all MOD contacts
 list_MOD_contacts() {
