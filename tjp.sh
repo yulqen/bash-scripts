@@ -45,7 +45,12 @@ list_MOD_entries() {
 
 # Function to list all MOD contacts
 list_MOD_contacts() {
-    psql -h "$HOST" -U "$USER" -d "$DB_CONTACTS" -c "SELECT * FROM contacts WHERE contact_type = 3;"
+    psql -h "$HOST" -U "$USER" -d "$DB_CONTACTS" -c "SELECT id, first_name, last_name, email, phone, contact_comments FROM contacts WHERE contact_type = 3;"
+}
+
+# Function to list all MOD meetings
+list_MOD_meetings() {
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, name, date, subject FROM meetings;"
 }
 
 # Function to add a new meeting
@@ -87,6 +92,9 @@ case "$1" in
     -M)
         list_MOD_entries
         ;;
+    -F)
+        list_MOD_meetings
+        ;;
     -e)
         add_meeting
         ;;
@@ -99,14 +107,15 @@ case "$1" in
         ;;
     *)
         echo "Usage:"
-        echo "  jlp -p - Add personal entry"
-        echo "  jlp -m - Add MOD entry"
-        echo "  jlp -C - Add MOD contact"
-        echo "  jlp -y - Select all MOD contacts"
-        echo "  jlp -l - Select all personal entries"
-        echo "  jlp -M - Select all MOD entries"
-        echo "  jlp -e - Add new meeting (returns meeting ID)"
-        echo "  jlp -E ID - Add new journal entry for meeting whose ID is ID"
+        echo "  tjp -p - Add personal entry"
+        echo "  tjp -m - Add MOD entry"
+        echo "  tjp -C - Add MOD contact"
+        echo "  tjp -y - Select all MOD contacts"
+        echo "  tjp -l - Select all personal entries"
+        echo "  tjp -M - Select all MOD entries"
+        echo "  tjp -F - Select all MOD meetings"
+        echo "  tjp -e - Add new meeting (returns meeting ID)"
+        echo "  tjp -E ID - Add new journal entry for meeting whose ID is ID"
         ;;
 esac
 
