@@ -35,7 +35,7 @@ add_MOD_entry() {
 
 # Function to select all personal entries
 list_personal_entries() {
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT * FROM journal_entries WHERE type = 2;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, date_added, entry, comment FROM journal_entries WHERE type = 2;"
 }
 
 # Function to select all MOD entries
