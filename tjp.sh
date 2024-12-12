@@ -84,7 +84,7 @@ case "$1" in
 	-C)
 		add_MOD_contact
 		;;
-    -y) list_MOD_contacts
+    -Y) list_MOD_contacts
         ;;
     -l)
         list_personal_entries
@@ -110,7 +110,7 @@ case "$1" in
         echo "  tjp -p - Add personal entry"
         echo "  tjp -m - Add MOD entry"
         echo "  tjp -C - Add MOD contact"
-        echo "  tjp -y - Select all MOD contacts"
+        echo "  tjp -Y - Select all MOD contacts"
         echo "  tjp -l - Select all personal entries"
         echo "  tjp -M - Select all MOD entries"
         echo "  tjp -F - Select all MOD meetings"
