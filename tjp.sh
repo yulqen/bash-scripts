@@ -15,7 +15,7 @@ add_MOD_contact() {
 	read mod_first_name
 	echo "Enter last name:"
 	read mod_last_name
-    contact_id=$(psql -h "$HOST" -U "$USER" -d "$DB_CONTACTS" -c "INSERT INTO contacts (first_name, last_name, contact_type) VALUES ('$mod_first_name', '$mod_last_name', 3) RETURNING id;")
+    contact_id=$(psql -h "$HOST" -U "$USER" -d "$DB" -c "INSERT INTO contacts (first_name, last_name, contact_type) VALUES ('$mod_first_name', '$mod_last_name', 3) RETURNING id;")
     echo "MOD contact added with ID: $contact_id. Feel free to go in and add comments, email and phone number separately."
 }
 
@@ -70,7 +70,7 @@ list_MOD_meeting_entries() {
 
 # Function to list all MOD contacts
 list_MOD_contacts() {
-    psql -h "$HOST" -U "$USER" -d "$DB_CONTACTS" -c "SELECT id, first_name, last_name, email, phone, contact_comments FROM contacts WHERE contact_type = 3;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, first_name, last_name, email, phone, contact_comments FROM contacts WHERE contact_type = 3;"
 }
 
 # Function to list all MOD meetings
