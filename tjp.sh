@@ -19,6 +19,13 @@ add_MOD_contact() {
     echo "MOD contact added with ID: $contact_id. Feel free to go in and add comments, email and phone number separately."
 }
 
+# Function to add a sleep entry
+add_sleep_entry() {
+    echo "Enter your sleep journal entry:"
+    read entry
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "INSERT INTO journal_entries (entry, type) VALUES ('$entry', 4);"
+}
+
 # Function to add a personal entry
 add_personal_entry() {
     echo "Enter your personal journal entry:"
@@ -35,14 +42,19 @@ add_MOD_entry() {
 
 # Function to select all personal entries
 list_personal_entries() {
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, date_added, entry, comment FROM journal_entries WHERE type = 2;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, date_added, entry, comment FROM journal_entries WHERE type = 2 ORDER BY id ASC;"
+}
+
+# Function to select all sleep entries
+list_sleep_entries() {
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, date_added, entry, comment FROM journal_entries WHERE type = 4 ORDER BY id ASC;"
 }
 
 # Funtion to list personel entries by date
 list_personal_entries_on_date() {
-    echo "Enter meeting date (YYYY-MM-DD):"
+    echo "Enter date (YYYY-MM-DD):"
     read target_date
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, entry, date_added::DATE from journal_entries WHERE date_added::date = '$target_date' AND type = 2;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, entry, date_added::DATE from journal_entries WHERE date_added::date = '$target_date' AND type = 2 ORDER BY date_added ASC;"
 }
 
 # Function to select all MOD entries
@@ -50,14 +62,14 @@ list_personal_entries_on_date() {
 #     psql -h "$HOST" -U "$USER" -d "$DB" -c "\x" -c "SELECT * FROM journal_entries WHERE type = 1;"
 # }
 list_MOD_entries() {
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "\x" -c "SELECT id, date_added, entry, comment, meeting_id FROM journal_entries WHERE type = 1;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "\x" -c "SELECT id, date_added, entry, comment, meeting_id FROM journal_entries WHERE type = 1 ORDER BY date_added ASC;"
 }
 
 # Funtion to list MOD entries by date
 list_MOD_entries_on_date() {
-    echo "Enter meeting date (YYYY-MM-DD):"
+    echo "Enter date (YYYY-MM-DD):"
     read target_date
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, entry, date_added::DATE from journal_entries WHERE date_added::date = '$target_date' AND type = 1;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, entry, date_added::DATE from journal_entries WHERE date_added::date = '$target_date' AND type = 1 ORDER BY date_added ASC;"
 }
 
 list_MOD_meeting_entries() {
@@ -65,17 +77,17 @@ list_MOD_meeting_entries() {
 	psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT journal_entries.id, entry, date_added, meetings.name FROM public.journal_entries
 													inner join meetings on journal_entries.meeting_id = meetings.id
 													WHERE meetings.id = $meeting_id
-													ORDER BY id ASC;"
+													ORDER BY date_added ASC;"
 }
 
 # Function to list all MOD contacts
 list_MOD_contacts() {
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, first_name, last_name, email, phone, contact_comments FROM contacts WHERE contact_type = 3;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, first_name, last_name, email, phone, contact_comments FROM contacts WHERE contact_type = 3 ORDER BY id ASC;"
 }
 
 # Function to list all MOD meetings
 list_MOD_meetings() {
-    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, name, date, subject FROM meetings;"
+    psql -h "$HOST" -U "$USER" -d "$DB" -c "SELECT id, name, date, subject FROM meetings ORDER BY date ASC;"
 }
 
 # Function to add a new meeting
@@ -102,6 +114,9 @@ add_entry_to_meeting() {
 
 # Main script logic
 case "$1" in
+    -s)
+        add_sleep_entry
+        ;;
     -p)
         add_personal_entry
         ;;
@@ -115,6 +130,9 @@ case "$1" in
         ;;
     -l)
         list_personal_entries
+        ;;
+    -q)
+        list_sleep_entries
         ;;
     -L)
         list_personal_entries_on_date
@@ -147,11 +165,13 @@ case "$1" in
         ;;
     *)
         echo "Usage:"
+        echo "  tjp -s - Add sleep entry"
         echo "  tjp -p - Add personal entry"
         echo "  tjp -m - Add MOD entry"
         echo "  tjp -C - Add MOD contact"
         echo "  tjp -Y - Select all MOD contacts"
         echo "  tjp -l - Select all personal entries"
+        echo "  tjp -q - Select all sleep entries"
         echo "  tjp -L - Select personal entries by date"
         echo "  tjp -M - Select all MOD entries"
         echo "  tjp -D - Select MOD entries on date"
