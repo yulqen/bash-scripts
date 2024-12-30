@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Setting this, so the repo does not need to be given on the commandline:
-export BORG_REPO=ssh://u423613@u423613.your-storagebox.de:23/~/backups/matt_desktop
+export BORG_REPO=ssh://u423613@u423613.your-storagebox.de:23/./backups/matt_desktop
 
 # See the section "Passphrase notes" for more infos.
 export BORG_PASSPHRASE='unrevised -equation -bovine -spring'
