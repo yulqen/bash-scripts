@@ -30,5 +30,5 @@ dwmblocks &
 # for clipmenu
 clipmenud &
 # redshift
-redshift &
+redshift-gtk &
 exec dwm
